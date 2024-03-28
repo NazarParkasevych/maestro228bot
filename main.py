@@ -26,9 +26,20 @@ async def school(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     message = update.message.text.lower()
     if 'hello' in message:
-        reply_text = f'Hello {update.effective_user.first_name}!'
+        if update.effective_user.last_name:
+            reply_text = f'Hello {update.effective_user.first_name} {update.effective_user.last_name}!'
+        else:
+            reply_text = f'Hello {update.effective_user.first_name}!'
+
+    elif 'goodbye' in message:
+        if update.effective_user.last_name:
+            reply_text = f'Goodbye {update.effective_user.first_name} {update.effective_user.last_name}!'
+        else:
+            reply_text = f'Goodbye {update.effective_user.first_name}!'
+
     else:
         reply_text = 'I dont understand you!'
+
     await update.message.reply_text(reply_text)
 
 app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
